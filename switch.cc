@@ -1,4 +1,5 @@
 #include "switch.h"
+#include <cstdio>
 
 SwitchBase* CreateSwitchObject() {
   // TODO : Your code.
