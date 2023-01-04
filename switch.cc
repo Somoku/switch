@@ -41,12 +41,12 @@ int Switch::ProcessFrame(int inPort, char* framePtr){
     return 0;
   }
   else if(ether_type == ETHER_CONTROL_TYPE){
-    for(auto& entry : this->switch_table){
-      entry.second.counter -= 1;
-      if(entry.second.counter <= ETHER_COMMAND_TYPE_AGING){
-        uint64_t k = entry.first;
-        this->switch_table.erase(k);
-      }
+    for(auto iter = this->switch_table.begin(); iter != this->switch_table.end();){
+      iter->second.counter -= 1;
+      if(iter->second.counter <= 0)
+        iter = this->switch_table.erase(iter);
+      else
+        ++iter;
     }
     return -1;
   }
